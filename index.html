@@ -1,0 +1,23 @@
+<script>
+    const fstUrl = 'https://api.weather.gov/zones/forecast';
+    const countyUrl = 'https://api.weather.gov/zones/county';
+
+    function fetchFileJSON(url, cb) {
+        fetch(url)
+        .then(res => res.json())
+        .then(data => { cb(data); })
+    }
+
+    var arr = [];
+
+    var n = 0;
+    fetchFileJSON(fstUrl, function(data) {
+        for (var i in data.features) {
+            fetchFileJSON(data.features[i].id, function(data) {
+                console.log(n)
+                n++;
+                arr.push(data);
+            })
+        }
+    })
+</script>
